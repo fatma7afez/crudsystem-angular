@@ -1,0 +1,102 @@
+<!-- crud-form -->
+<section class="crud-form">
+  <section class="container my-4">
+    <div class="form-data border rounded shadow p-5 my-5">
+      <form [formGroup]="phoneBookForm">
+        <div class="mb-3">
+          <label for="namePhoneBook" class="form-label">Name : </label>
+          <input
+            type="text"
+            class="form-control"
+            id="namePhoneBook"
+            formControlName="nameBook"
+            [ngClass]="{
+              invalid:
+                phoneBookForm.get('nameBook')?.invalid &&
+                phoneBookForm.get('nameBook')?.touched,
+              valid:
+                phoneBookForm.get('nameBook')?.valid &&
+                phoneBookForm.get('nameBook')?.touched
+            }"
+          />
+          <div
+            class="errors alert alert-danger my-0"
+            role="alert"
+            *ngIf="
+              phoneBookForm.get('nameBook')?.errors != null &&
+              phoneBookForm.get('nameBook')?.touched
+            "
+          >
+            <p *ngIf="phoneBookForm.get('nameBook')?.errors?.['required']">
+              Name is required
+            </p>
+            <p *ngIf="phoneBookForm.get('nameBook')?.errors?.['minlength']">
+              Name should be min character 3
+            </p>
+            <p *ngIf="phoneBookForm.get('nameBook')?.errors?.['maxlength']">
+              Name should be max character 7
+            </p>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="numberPhoneBook" class="form-label">Number Phone :</label>
+          <input
+            type="text"
+            class="form-control"
+            id="numberPhoneBook"
+            formControlName="numberBook"
+            [ngClass]="{
+              invalid:
+                phoneBookForm.get('numberBook')?.invalid &&
+                phoneBookForm.get('numberBook')?.touched,
+              valid:
+                phoneBookForm.get('numberBook')?.valid &&
+                phoneBookForm.get('numberBook')?.touched
+            }"
+          />
+          <div
+            class="errors alert alert-danger my-0"
+            role="alert"
+            *ngIf="
+              phoneBookForm.get('numberBook')?.errors != null &&
+              phoneBookForm.get('numberBook')?.touched
+            "
+          >
+            <p *ngIf="phoneBookForm.get('numberBook')?.errors?.['required']">
+              Number phone is required
+            </p>
+            <p *ngIf="phoneBookForm.get('numberBook')?.errors?.['pattern']">
+              Number phone is must be mobile or landline in egypt
+            </p>
+          </div>
+        </div>
+        <div class="mb-3 text-center" *ngIf="!isUpdated">
+          <button
+            type="submit"
+            (click)="onSubmit()"
+            class="btn btn-warning fw-bolder w-50 p-2"
+            [disabled]="!phoneBookForm.valid"
+          >
+            Add
+          </button>
+        </div>
+        <div class="mb-3 text-center" *ngIf="isUpdated">
+          <button
+            type="submit"
+            (click)="onUpdatePhoneData()"
+            class="btn btn-warning fw-bolder w-50 p-2"
+            [disabled]="!phoneBookForm.valid"
+          >
+            Updated
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- products -->
+    <app-products
+      (editedPhoneBook)="onGetEditPhoneBook($event)"
+      (phoneBookId)="onGetEditPhoneBookID($event)"
+    ></app-products>
+  </section>
+</section>

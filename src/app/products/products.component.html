@@ -1,0 +1,44 @@
+<section class="crud-system border rounded shadow p-5 my-5">
+  <ng-content></ng-content>
+  <section class="crud-search my-4">
+    <label for="searchNamePhone" class="mb-3">Search by name <span class="text-danger">*</span></label>
+    <input type="search" class="form-control" id="searchNamePhone" [(ngModel)]="name" placeholder="Name ...." />
+    <!-- <input type="search" class="form-control" id="searchNamePhone" (keyup)="onSearchNameBook($event)" placeholder="Name ...." /> -->
+
+
+  </section>
+  <section class="table-responsive text-center ">
+    <table class="table crud-table table-hover">
+      <thead class="bg-warning p-2">
+        <tr>
+          <th>Index</th>
+          <th>Name</th>
+          <th>Number</th>
+          <th>Updated</th>
+          <th>Delected</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="isphoneBookData && isphoneBookData.length > 0 ">
+        <tr *ngFor="let phoneDta of isphoneBookData | searchName:name  ; let i = index">
+          <!-- <tr *ngFor="let phoneDta of isphoneBookData ; let i = index"> -->
+
+          <td>{{ i + 1 }}</td>
+          <td>{{ phoneDta.nameBook }}</td>
+          <td>{{ phoneDta.numberBook }}</td>
+          <td class="clickable" (click)="onEditBookDta(i,phoneDta)">
+            <i class="fa-solid fa-pencil fa-lg text-info"></i>
+          </td>
+          <td class="clickable" (click)="onDeleteBookDta(i)">
+            <i class="fa-solid fa-trash-can fa-lg text-danger"></i>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div
+      class="text-center py-5"
+      *ngIf="isphoneBookData && isphoneBookData.length === 0"
+    >
+      <p>there are not phone book yet</p>
+    </div>
+  </section>
+</section>
